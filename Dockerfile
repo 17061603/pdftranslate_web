@@ -30,6 +30,7 @@ COPY README.md /app/
 
 # 安装Python依赖
 RUN pip install --upgrade pip && \
+    pip install coloredlogs onnxruntime && \  
     pip install -e .
 
 # 复制启动脚本
@@ -37,7 +38,7 @@ COPY docker/start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 # 暴露端口
-EXPOSE 8000 7860
+EXPOSE 8000
 
 # 健康检查
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \

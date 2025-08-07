@@ -15,11 +15,11 @@ echo "========================="
 
 # 启动API服务器(后台)
 echo "启动API服务器..."
-python3 /app/scripts/run_server.py &
+python3 /app/scripts/run_server.py
 
-# 等待API服务器启动
-sleep 10
+# # 等待API服务器启动
+# sleep 10
 
-# 启动Gradio客户端
-echo "启动Web界面..."
-python3 /app/scripts/run_gradio.py --server-url http://localhost:8000 --host 0.0.0.0 --port 7860
+# # 启动Gradio客户端
+# echo "启动Web界面..."
+# python3 /app/scripts/run_gradio.py --server-url http://localhost:8000 --host 0.0.0.0 --port 7860

@@ -1,31 +1,28 @@
-version: '3.8'
-
 services:
   pdftranslate:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pdftranslate-web
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: pdftranslate_web
     restart: unless-stopped
     ports:
       - "8000:8000"  # API服务端口
-      - "7860:7860"  # Gradio Web界面端口
     environment:
       # OpenAI配置 (必填)
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OPENAI_MODEL=${OPENAI_MODEL:-deepseek-ai/DeepSeek-V3}
-      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.siliconflow.cn/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-sk-a8752f6571464565bd20a4f1fcd79126}
+      - OPENAI_MODEL=${OPENAI_MODEL:-deepseek-chat}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.deepseek.com/v1}
       
       # 服务器配置
       - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
       - SERVER_PORT=${SERVER_PORT:-8000}
-      - QPS=${QPS:-4}
+      - QPS=${QPS:-12}
       
       # 翻译配置
       - DEFAULT_LANG_IN=${DEFAULT_LANG_IN:-en}
       - DEFAULT_LANG_OUT=${DEFAULT_LANG_OUT:-zh}
       - WATERMARK_OUTPUT_MODE=${WATERMARK_OUTPUT_MODE:-no_watermark}
-      - NO_DUAL=${NO_DUAL:-false}
+      - NO_DUAL=${NO_DUAL:-true}
       - NO_MONO=${NO_MONO:-false}
     volumes:
       # 日志文件挂载 (可选)
