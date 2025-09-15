@@ -3,7 +3,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
-    image: pdftranslate_web:latest
+    image: fs-ai-pdftans:dx20250912
     restart: unless-stopped
     ports:
       - "8000:8000"  # API服务端口
@@ -16,7 +16,7 @@ services:
       # 服务器配置
       - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
       - SERVER_PORT=${SERVER_PORT:-8000}
-      - QPS=${QPS:-12}
+      - QPS=${QPS:-20}
       
       # 翻译配置
       - DEFAULT_LANG_IN=${DEFAULT_LANG_IN:-en}

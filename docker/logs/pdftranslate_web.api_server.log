@@ -1,2 +1,4 @@
 2025-08-11 10:57:05,370 - pdftranslate_web.api_server - INFO - Using OpenAI model: deepseek-chat
 2025-08-11 10:57:05,370 - pdftranslate_web.api_server - INFO - Default languages: en -> zh
+2025-09-15 09:33:07,259 - pdftranslate_web.api_server - INFO - Using OpenAI model: deepseek-chat
+2025-09-15 09:33:07,259 - pdftranslate_web.api_server - INFO - Default languages: en -> zh

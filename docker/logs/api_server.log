@@ -1,0 +1,15 @@
+2025-09-15 09:04:30,936 - api_server - INFO - Using OpenAI model: deepseek-chat
+2025-09-15 09:04:30,936 - api_server - INFO - Default languages: en -> zh
+2025-09-15 09:11:40,873 - api_server - ERROR - Translation failed for task 0d4c7389-bc6c-432d-8099-fc6accccab9b: cannot unpack non-iterable NoneType object
+2025-09-15 09:13:18,930 - api_server - ERROR - Translation failed for task b6f64d34-c082-497d-a2c7-c8a9ad262e41: cannot unpack non-iterable NoneType object
+2025-09-15 09:18:11,964 - api_server - ERROR - Translation failed for task 5486ad81-a9ca-4d21-a4a2-d4473b0e2940: cannot unpack non-iterable NoneType object
+2025-09-15 09:18:21,807 - api_server - ERROR - Translation failed for task 2642eed2-ddcd-44a3-84f7-24da5d3b4685: cannot unpack non-iterable NoneType object
+2025-09-15 09:27:12,819 - api_server - INFO - Using OpenAI model: deepseek-chat
+2025-09-15 09:27:12,820 - api_server - INFO - Default languages: en -> zh
+2025-09-15 10:10:58,200 - api_server - INFO - Using OpenAI model: deepseek-chat
+2025-09-15 10:10:58,200 - api_server - INFO - Default languages: en -> zh
+2025-09-15 10:13:20,829 - api_server - INFO - Using OpenAI model: deepseek-chat
+2025-09-15 10:13:20,829 - api_server - INFO - Default languages: en -> zh
+2025-09-15 10:14:55,092 - api_server - INFO - Translation completed for task 973b28a4-4148-47f3-a4c8-fe2ecd885abd
+2025-09-15 10:14:57,942 - api_server - INFO - Translation completed for task 804b53df-b2d2-440b-b8d8-8e65771df8d7
+2025-09-15 10:15:05,861 - api_server - INFO - Translation completed for task 047f1fe6-ff6f-4806-9202-738908b03ecc

@@ -1,0 +1,3 @@
+2025-09-15 16:02:10,528 - api_server - INFO - Using OpenAI model: deepseek-chat
+2025-09-15 16:02:10,529 - api_server - INFO - Default languages: en -> zh
+2025-09-15 16:10:14,211 - api_server - INFO - Translation completed for task 5521fd25-1d0c-4c88-836f-06f2bc347fc0
