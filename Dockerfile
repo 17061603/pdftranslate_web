@@ -26,7 +26,7 @@ COPY pyproject.toml /app/
 COPY src/ /app/src/
 COPY scripts/ /app/scripts/
 COPY simaple/ /app/simaple/
-COPY README.md /app/
+
 
 # 安装Python依赖
 RUN pip install --upgrade pip && \

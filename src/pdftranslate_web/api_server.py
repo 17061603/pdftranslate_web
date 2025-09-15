@@ -18,7 +18,8 @@ import babeldoc.format.pdf.high_level
 from babeldoc.format.pdf.translation_config import TranslationConfig, WatermarkOutputMode
 from babeldoc.translator.translator import OpenAITranslator, set_translate_rate_limiter
 
-logger = logging.getLogger(__name__)
+
+
 load_dotenv()  # 自动加载同目录下的 .env 文件
 # 从环境变量加载配置
 def load_config():
@@ -32,7 +33,7 @@ def load_config():
         "server": {
             "host": os.getenv("SERVER_HOST", "0.0.0.0"),
             "port": int(os.getenv("SERVER_PORT", "8000")),
-            "qps": int(os.getenv("QPS", "4"))
+            "qps": int(os.getenv("QPS", "12"))
         },
         "translation": {
             "default_lang_in": os.getenv("DEFAULT_LANG_IN", "en"),
@@ -40,15 +41,50 @@ def load_config():
             "watermark_output_mode": os.getenv("WATERMARK_OUTPUT_MODE", "no_watermark"),
             "no_dual": os.getenv("NO_DUAL", "false").lower() == "true",
             "no_mono": os.getenv("NO_MONO", "false").lower() == "true"
+        },
+        "storage": {
+            "logs_dir": os.getenv("LOGS_DIR", "./data/logs"),
+            "temp_dir": os.getenv("TEMP_DIR", "./data/temp"),
+            "uploads_dir": os.getenv("UPLOADS_DIR", "./data/uploads"),
+            "downloads_dir": os.getenv("DOWNLOADS_DIR", "./data/downloads")
         }
     }
 
 config = load_config()
+log_dir = Path(config["storage"]["logs_dir"])
+log_file = log_dir/ f"{__name__}.log"
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO) 
+
+
+file_handler = logging.FileHandler(log_file)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
 
 # 验证OpenAI配置
 if not config["openai"]["api_key"]:
     logger.error("未找到OpenAI API密钥！请通过环境变量OPENAI_API_KEY提供")
     raise ValueError("Missing OpenAI API key")
+
+
+def init_directories():
+    storage_config = config["storage"]
+    # 遍历所有需要的目录并创建
+    for dir_path in [
+        storage_config["logs_dir"],
+        storage_config["temp_dir"],
+        storage_config["uploads_dir"],
+        storage_config["downloads_dir"]
+    ]:
+        dir_obj = Path(dir_path)
+        dir_obj.mkdir(exist_ok=True, parents=True)
+        # 可选：设置目录权限（避免容器内权限问题）
+        dir_obj.chmod(0o777)
+
+# 应用启动时调用
+init_directories()
 
 app = FastAPI(title="BabelDOC Translation API", version="0.4.16")
 
@@ -178,6 +214,9 @@ async def translate_document(
         translation_tasks[task_id].message = f"翻译过程出错: {str(e)}"
         logger.error(f"Translation error for task {task_id}: {e}", exc_info=True)
 
+
+
+
 @app.post("/translate", response_model=dict)
 async def translate_pdf(
     background_tasks: BackgroundTasks,
@@ -193,11 +232,17 @@ async def translate_pdf(
         raise HTTPException(status_code=400, detail="只支持PDF文件")
     
     task_id = str(uuid.uuid4())
-    
-    temp_dir = Path(tempfile.mkdtemp())
-    pdf_path = temp_dir / file.filename
-    output_dir = temp_dir / "output"
-    output_dir.mkdir(exist_ok=True)
+
+
+    uploads_task_dir = Path(config["storage"]["uploads_dir"]) / task_id
+    uploads_task_dir.mkdir(exist_ok=True)
+    pdf_path = uploads_task_dir / file.filename  # 原始文件路径
+
+
+    downloads_task_dir = Path(config["storage"]["downloads_dir"]) / task_id
+    downloads_task_dir.mkdir(exist_ok=True)
+    output_dir = downloads_task_dir  
+
     
     with open(pdf_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)

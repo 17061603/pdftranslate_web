@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   pdftranslate-mcp:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     image: pdftranslate-mcp-server:latest
     container_name: pdftranslate-mcp-server
     restart: unless-stopped

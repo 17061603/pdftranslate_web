@@ -3,7 +3,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
-    image: pdftranslate_web
+    image: pdftranslate_web:latest
     restart: unless-stopped
     ports:
       - "8000:8000"  # API服务端口
@@ -26,7 +26,13 @@ services:
       - NO_MONO=${NO_MONO:-false}
     volumes:
       # 日志文件挂载 (可选)
-      - ./logs:/app/logs
+      - ./logs:/app/data/logs
+      # 挂载临时文件目录
+      - ./temp:/app/data/temp
+      # 挂载上传下载目录
+      - ./uploads:/app/data/uploads
+      - ./downloads:/app/data/downloads
+    
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
